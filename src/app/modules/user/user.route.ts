@@ -10,4 +10,15 @@ router.post(
   validateRequest(UserValidations.createUserValidationSchema),
   UserControllers.createUser,
 );
+
+router.get('/', UserControllers.getAllUsers);
+
+router.get('/:email', UserControllers.getUserByEmail);
+
+router.patch(
+  '/:id',
+  validateRequest(UserValidations.UpdateUserValidationSchema),
+  UserControllers.updateUser,
+);
+
 export const UserRoutes = router;
