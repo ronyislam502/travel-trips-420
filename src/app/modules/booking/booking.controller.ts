@@ -26,7 +26,19 @@ const getAllBookings = catchAsync(async (req, res) => {
   });
 });
 
+const statistics = catchAsync(async (req, res) => {
+  const result = await BookingServices.getSiteStatisticsFromDB();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Statistics retrieved successfully',
+    data: result,
+  });
+});
+
 export const BookingControllers = {
   createBooking,
   getAllBookings,
+  statistics,
 };

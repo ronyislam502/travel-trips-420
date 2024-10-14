@@ -7,6 +7,7 @@ import { Booking } from './booking.model';
 import { transactionId } from '../../utils/utils';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import { Post } from '../post/post.model';
 
 const createBookingIntoDB = async (
   email: string,
@@ -46,7 +47,35 @@ const getAllBookingsFromDB = async () => {
   return result;
 };
 
+const getSiteStatisticsFromDB = async () => {
+  const totalUsers = await User.countDocuments();
+  const totalPremiumUsers = await User.countDocuments({ status: 'premium' });
+  const totalBasicUsers = await User.countDocuments({ status: 'basic' });
+
+  const totalContents = await Post.countDocuments();
+  const totalInactiveContents = await Post.countDocuments({ isActive: false });
+
+  const result = {
+    totalUsers: totalUsers,
+    totalPremiumUsers: totalPremiumUsers,
+    totalBasicUsers: totalBasicUsers,
+    totalContents: totalContents,
+    totalActiveContents: totalContents - totalInactiveContents,
+    totalInactiveContents: totalInactiveContents,
+  };
+
+  return result;
+
+  // sendResponse(res, {
+  //   statusCode: httpStatus.OK,
+  //   success: true,
+  //   message: 'Site statistics retrieved successfully',
+  //   data: result,
+  // });
+};
+
 export const BookingServices = {
   createBookingIntoDB,
   getAllBookingsFromDB,
+  getSiteStatisticsFromDB,
 };
