@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
-import { Model } from 'mongoose';
+
+import { Model, Types } from 'mongoose';
 // import { USER_ROLE } from './user.constant';
 
 export type TUserName = {
@@ -10,6 +11,7 @@ export type TUserName = {
 };
 
 export type TUser = {
+  id: string;
   name: TUserName;
   email: string;
   password: string;
@@ -19,15 +21,24 @@ export type TUser = {
   status: 'basic' | 'premium';
   address?: string;
   avatar: string;
-  // following: Types.ObjectId[];
-  // followers: Types.ObjectId[];
+  following: Types.ObjectId[];
+  followers: Types.ObjectId[];
+  needsPasswordChange: boolean;
+  passwordChangedAt?: Date;
   isDeleted: boolean;
 };
 
 export interface UserModel extends Model<TUser> {
-  //instance methods for checking if the user exist
   isUserExistsByEmail(email: string): Promise<TUser>;
-  //instance methods for checking if passwords are matched
+
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean>;
+  isJWTIssuedBeforePasswordChanged(
+    passwordChangedTimestamp: Date,
+    jwtIssuedTimestamp: number,
+  ): boolean;
 }
 
 // export type TUserRole = keyof typeof USER_ROLE;

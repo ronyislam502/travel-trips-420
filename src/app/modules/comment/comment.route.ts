@@ -13,4 +13,6 @@ router.post(
 
 router.get('/', CommentControllers.getAllCommentsByPost);
 
-export const PostRoutes = router;
+router.patch('/post/:id', CommentControllers.editComment);
+
+export const CommentRoutes = router;

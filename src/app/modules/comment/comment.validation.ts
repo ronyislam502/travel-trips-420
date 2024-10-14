@@ -2,15 +2,17 @@ import { z } from 'zod';
 
 const createCommentValidationSchema = z.object({
   body: z.object({
+    post: z.string(),
     user: z.string(),
-    content: z.string(),
+    reply: z.string(),
   }),
 });
 
 const updateCommentValidationSchema = z.object({
   body: z.object({
+    post: z.string().optional(),
     user: z.string().optional(),
-    content: z.string().optional(),
+    reply: z.string().optional(),
   }),
 });
 

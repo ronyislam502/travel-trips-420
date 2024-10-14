@@ -4,7 +4,8 @@ import sendResponse from '../../utils/sendResponse';
 import { CommentServices } from './comment.service';
 
 const createCommentByPost = catchAsync(async (req, res) => {
-  const result = await CommentServices.createCommentByPostIntoDB(req.body);
+  const { id } = req.params;
+  const result = await CommentServices.commentIntoPostDB(id, req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -15,7 +16,8 @@ const createCommentByPost = catchAsync(async (req, res) => {
 });
 
 const getAllCommentsByPost = catchAsync(async (req, res) => {
-  const result = await CommentServices.getAllCommentsByPostFromDB();
+  const { id } = req.params;
+  const result = await CommentServices.getCommentsByPostFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -25,7 +27,20 @@ const getAllCommentsByPost = catchAsync(async (req, res) => {
   });
 });
 
+const editComment = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await CommentServices.EditCommentIntoPost(id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Comments update successfully',
+    data: result,
+  });
+});
+
 export const CommentControllers = {
   createCommentByPost,
   getAllCommentsByPost,
+  editComment,
 };

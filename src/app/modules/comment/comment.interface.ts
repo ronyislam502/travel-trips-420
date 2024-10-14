@@ -1,8 +1,8 @@
 import { Types } from 'mongoose';
 
-export interface TComment {
-  post: Types.ObjectId;
-  user: Types.ObjectId;
-  reply: string;
+export type TComment = {
+  postId: Types.ObjectId;
+  userId: Types.ObjectId;
+  feedback: string;
   isDeleted: boolean;
-}
+};

@@ -1,21 +1,21 @@
 import { Types } from 'mongoose';
 
 export type TComment = {
-  user: Types.ObjectId;
+  commenter: Types.ObjectId;
   content: string;
-  createdAt: Date;
+  _id: string;
 };
-
-export type TPost = {
+export interface TPost {
   title: string;
   content: string;
-  user: Types.ObjectId;
+  cover: string;
+  tags: 'premium' | 'everyone';
+  comments?: TComment[];
+  commentsCount?: number;
+  upVotes: Types.ObjectId[];
+  downVotes: Types.ObjectId[];
+  author: Types.ObjectId;
   category: string;
-  tags: string;
-  images: string;
-  isPremium: boolean;
-  upVotes: number;
-  downVotes: number;
-  comments?: TComment;
+  isActive: boolean;
   isDeleted: boolean;
-};
+}
