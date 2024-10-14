@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 
 import { Model, Types } from 'mongoose';
+import { USER_ROLE } from './user.constant';
 // import { USER_ROLE } from './user.constant';
 
 export type TUserName = {
@@ -41,4 +42,4 @@ export interface UserModel extends Model<TUser> {
   ): boolean;
 }
 
-// export type TUserRole = keyof typeof USER_ROLE;
+export type TUserRole = keyof typeof USER_ROLE;
