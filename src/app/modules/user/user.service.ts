@@ -33,6 +33,39 @@ const updateUserIntoDB = async (id: string, payload: Partial<TUser>) => {
   return result;
 };
 
+const followUser = async (payload: FollowPayload) => {
+  const { userId, targetedId } = payload;
+
+  // Convert string IDs to ObjectId
+  const userObjectId = new Types.ObjectId(userId);
+  const targetedObjectId = new Types.ObjectId(targetedId);
+
+  const targetedUser = await User.findById(targetedObjectId);
+  if (!targetedUser) {
+    throw new Error('User not found');
+  }
+
+  const isFollowing = targetedUser.followers.includes(userObjectId);
+
+  if (isFollowing) {
+    await User.findByIdAndUpdate(userObjectId, {
+      $pull: { following: targetedObjectId },
+    });
+    await User.findByIdAndUpdate(targetedObjectId, {
+      $pull: { followers: userObjectId },
+    });
+    return 'Unfollowed successfully';
+  } else {
+    await User.findByIdAndUpdate(userObjectId, {
+      $push: { following: targetedObjectId },
+    });
+    await User.findByIdAndUpdate(targetedObjectId, {
+      $push: { followers: userObjectId },
+    });
+    return 'Followed successfully';
+  }
+};
+
 export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,

@@ -4,6 +4,7 @@ import { PostRoutes } from '../modules/post/post.route';
 import { CommentRoutes } from '../modules/comment/comment.route';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { BookingRoutes } from '../modules/booking/booking.route';
+import { FollowerRoutes } from '../modules/follower/follower.route';
 
 const router = Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/bookings',
     route: BookingRoutes,
+  },
+  {
+    path: '/followers',
+    route: FollowerRoutes,
   },
 ];
 

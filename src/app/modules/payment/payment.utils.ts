@@ -1,7 +1,7 @@
 import axios from 'axios'
 import dotenv from 'dotenv'
 import config from '../../config'
-import { TPaymentInfo } from './paymentinterface'
+import { TPaymentInfo } from './payment.interface'
 dotenv.config()
 
 export const initiatePayment = async (paymentData: TPaymentInfo) => {
