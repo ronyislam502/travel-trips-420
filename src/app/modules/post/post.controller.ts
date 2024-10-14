@@ -25,21 +25,9 @@ const getAllPosts = catchAsync(async (req, res) => {
   });
 });
 
-const getSinglePost = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await PostServices.getSinglePostFromDB(id);
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Post retrieved Successfully',
-    data: result,
-  });
-});
-
 const getPostsByAuthor = catchAsync(async (req, res) => {
-  const { email } = req.params;
-  const result = await PostServices.getPostsByAuthorFromDB(email);
+  const { id } = req.params;
+  const result = await PostServices.getPostsByAuthorFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -49,9 +37,21 @@ const getPostsByAuthor = catchAsync(async (req, res) => {
   });
 });
 
+const updatePost = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await PostServices.updatePostIntoDB(id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Post update Successfully',
+    data: result,
+  });
+});
+
 export const PostControllers = {
   createPost,
   getAllPosts,
-  getSinglePost,
   getPostsByAuthor,
+  updatePost,
 };

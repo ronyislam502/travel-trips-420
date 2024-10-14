@@ -8,7 +8,7 @@ const createPostSchema = z.object({
   body: z.object({
     title: z.string().optional(),
     content: z.string().optional(),
-    author: z.string().optional(),
+    user: z.string().optional(),
     category: z.string().optional(),
     tags: z.string().optional(),
     images: z.string().optional(),

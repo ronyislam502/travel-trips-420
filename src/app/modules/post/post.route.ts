@@ -11,4 +11,14 @@ router.post(
   PostControllers.createPost,
 );
 
+router.get('/', PostControllers.getAllPosts);
+
+router.get('/:id', PostControllers.getPostsByAuthor);
+
+router.patch(
+  '/:id',
+  validateRequest(PostValidations.updatePostSchema),
+  PostControllers.updatePost,
+);
+
 export const PostRoutes = router;

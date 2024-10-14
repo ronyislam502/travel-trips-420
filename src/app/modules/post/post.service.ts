@@ -7,16 +7,12 @@ const createPostIntoDB = async (payload: TPost) => {
 };
 
 const getAllPostsFromDB = async () => {
-  const result = await Post.find();
+  const result = await Post.find().populate('user');
   return result;
 };
 
-const getSinglePostFromDB = async (id: string) => {
-  const result = await Post.findById(id);
-  return result;
-};
-const getPostsByAuthorFromDB = async (email: string) => {
-  const result = await Post.findOne({ email });
+const getPostsByAuthorFromDB = async (id: string) => {
+  const result = await Post.find({ user: id }).populate('user');
   return result;
 };
 const updatePostIntoDB = async (id: string, payload: Partial<TPost>) => {
@@ -30,7 +26,6 @@ const updatePostIntoDB = async (id: string, payload: Partial<TPost>) => {
 export const PostServices = {
   createPostIntoDB,
   getAllPostsFromDB,
-  getSinglePostFromDB,
   updatePostIntoDB,
   getPostsByAuthorFromDB,
 };
